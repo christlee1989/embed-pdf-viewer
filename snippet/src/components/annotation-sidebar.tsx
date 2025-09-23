@@ -55,7 +55,7 @@ export function leftPanelAnnotationStyleRenderer({
     <div class="h-full overflow-y-auto p-4">
       {computedTitle && (
         <h2 class="text-md mb-4 font-medium">
-          {computedTitle} {selectedAnnotation ? 'styles' : 'defaults'}
+          {computedTitle} {selectedAnnotation ? '样式' : '默认值'}
         </h2>
       )}
       <Sidebar {...(commonProps as any)} />

@@ -36,13 +36,13 @@ export const MenuDropdown = ({ onEdit, onDelete, onClose }: MenuDropdownProps) =
           onClick={handleEdit}
           className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
         >
-          Edit
+          编辑
         </button>
         <button
           onClick={handleDelete}
           className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"
         >
-          Delete
+          删除
         </button>
       </div>
     </div>

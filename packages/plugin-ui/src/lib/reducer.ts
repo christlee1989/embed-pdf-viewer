@@ -17,6 +17,14 @@ export const initialState: UIPluginState = {
   divider: {},
   iconButton: {},
   tabButton: {},
+  textButton: {
+    hostBtn: {
+      active: false,
+    },
+    followBtn: {
+      active: false,
+    },
+  },
   selectButton: {},
   custom: {},
   floating: {},

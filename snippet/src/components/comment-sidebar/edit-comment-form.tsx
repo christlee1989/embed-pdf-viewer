@@ -49,13 +49,13 @@ export const EditCommentForm = ({
           onClick={handleSaveClick}
           className="rounded-md bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
         >
-          Save
+          保存
         </button>
         <button
           onClick={handleCancelClick}
           className="rounded-md bg-gray-300 px-3 py-1 text-sm text-gray-700 hover:bg-gray-400"
         >
-          Cancel
+          取消
         </button>
       </div>
     </div>

@@ -41,7 +41,7 @@ interface ModeBuckets {
   page: PageHandlerMap;
 }
 
-const INITIAL_MODE = 'pointerMode';
+const INITIAL_MODE = 'panMode';
 
 export class InteractionManagerPlugin extends BasePlugin<
   InteractionManagerPluginConfig,

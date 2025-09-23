@@ -15,8 +15,8 @@ import {
 import { InteractionManagerState } from './types';
 
 export const initialState: InteractionManagerState = {
-  activeMode: 'pointerMode',
-  defaultMode: 'pointerMode',
+  activeMode: 'panMode',
+  defaultMode: 'panMode',
   cursor: 'auto',
   paused: false,
   exclusionRules: {

@@ -90,9 +90,9 @@ export default [
           host: 'localhost',
           port: 3020,
           headers: {
-            'Cross-Origin-Opener-Policy': 'same-origin',
-            'Cross-Origin-Embedder-Policy': 'require-corp',
-            'Access-Control-Allow-Origin': '*',
+            // 'Cross-Origin-Opener-Policy': 'same-origin',
+            // 'Cross-Origin-Embedder-Policy': 'require-corp',
+            // 'Access-Control-Allow-Origin': '*',
           },
         }),
       terser({

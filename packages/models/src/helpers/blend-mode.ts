@@ -33,22 +33,22 @@ interface BlendModeInfo {
 
 /** Canonical ordered descriptor list (matches enum numeric order). */
 const BLEND_MODE_INFOS: readonly BlendModeInfo[] = Object.freeze([
-  { id: PdfBlendMode.Normal, label: 'Normal', css: 'normal' },
-  { id: PdfBlendMode.Multiply, label: 'Multiply', css: 'multiply' },
-  { id: PdfBlendMode.Screen, label: 'Screen', css: 'screen' },
-  { id: PdfBlendMode.Overlay, label: 'Overlay', css: 'overlay' },
-  { id: PdfBlendMode.Darken, label: 'Darken', css: 'darken' },
-  { id: PdfBlendMode.Lighten, label: 'Lighten', css: 'lighten' },
-  { id: PdfBlendMode.ColorDodge, label: 'Color Dodge', css: 'color-dodge' },
-  { id: PdfBlendMode.ColorBurn, label: 'Color Burn', css: 'color-burn' },
-  { id: PdfBlendMode.HardLight, label: 'Hard Light', css: 'hard-light' },
-  { id: PdfBlendMode.SoftLight, label: 'Soft Light', css: 'soft-light' },
-  { id: PdfBlendMode.Difference, label: 'Difference', css: 'difference' },
-  { id: PdfBlendMode.Exclusion, label: 'Exclusion', css: 'exclusion' },
-  { id: PdfBlendMode.Hue, label: 'Hue', css: 'hue' },
-  { id: PdfBlendMode.Saturation, label: 'Saturation', css: 'saturation' },
-  { id: PdfBlendMode.Color, label: 'Color', css: 'color' },
-  { id: PdfBlendMode.Luminosity, label: 'Luminosity', css: 'luminosity' },
+  { id: PdfBlendMode.Normal, label: '正常', css: 'normal' },
+  { id: PdfBlendMode.Multiply, label: '正片叠底', css: 'multiply' },
+  { id: PdfBlendMode.Screen, label: '滤色', css: 'screen' },
+  { id: PdfBlendMode.Overlay, label: '叠加', css: 'overlay' },
+  { id: PdfBlendMode.Darken, label: '变暗', css: 'darken' },
+  { id: PdfBlendMode.Lighten, label: '变亮', css: 'lighten' },
+  { id: PdfBlendMode.ColorDodge, label: '颜色减淡', css: 'color-dodge' },
+  { id: PdfBlendMode.ColorBurn, label: '颜色加深', css: 'color-burn' },
+  { id: PdfBlendMode.HardLight, label: '强光', css: 'hard-light' },
+  { id: PdfBlendMode.SoftLight, label: '柔光', css: 'soft-light' },
+  { id: PdfBlendMode.Difference, label: '差值', css: 'difference' },
+  { id: PdfBlendMode.Exclusion, label: '排除', css: 'exclusion' },
+  { id: PdfBlendMode.Hue, label: '色相', css: 'hue' },
+  { id: PdfBlendMode.Saturation, label: '饱和度', css: 'saturation' },
+  { id: PdfBlendMode.Color, label: '颜色', css: 'color' },
+  { id: PdfBlendMode.Luminosity, label: '明度', css: 'luminosity' },
 ]);
 
 /* Build O(1) maps once */

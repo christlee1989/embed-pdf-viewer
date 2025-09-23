@@ -13,7 +13,7 @@ export const manifest: PluginManifest<AnnotationPluginConfig> = {
   defaultConfig: {
     enabled: true,
     autoCommit: true,
-    annotationAuthor: 'Guest',
+    annotationAuthor: '访客',
     deactivateToolAfterCreate: false,
     selectAfterCreate: true,
   },

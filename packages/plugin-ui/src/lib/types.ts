@@ -33,6 +33,11 @@ export interface UIPluginState {
   tabButton: {
     [id: string]: {};
   };
+  textButton: {
+    [id: string]: {
+      active?: boolean;
+    };
+  };
   selectButton: {
     [id: string]: {};
   };
@@ -176,6 +181,7 @@ export interface IconButtonProps {
   label?: string;
   img?: string;
   color?: string;
+  showLabel?: boolean;
 }
 
 export interface IconButtonComponent<TStore = any>
@@ -190,9 +196,21 @@ export interface TabButtonProps {
   label: string;
 }
 
+export interface TextButtonProps {
+  active?: boolean;
+  commandId?: string;
+  onClick?: () => void;
+  label: string;
+}
+
 export interface TabButtonComponent<TStore = any>
   extends BaseUIComponent<TabButtonProps, undefined, TStore> {
   type: 'tabButton';
+}
+
+export interface TextButtonComponent<TStore = any>
+  extends BaseUIComponent<TextButtonProps, undefined, TStore> {
+  type: 'textButton';
 }
 
 export interface SelectButtonProps {
@@ -273,6 +291,7 @@ export type UIComponentType<TStore = any> =
   | DividerComponent<TStore>
   | IconButtonComponent<TStore>
   | TabButtonComponent<TStore>
+  | TextButtonComponent<TStore>
   | HeaderComponent<TStore>
   | PanelComponent<TStore>
   | CustomComponent<TStore>

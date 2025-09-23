@@ -24,21 +24,21 @@ type SidebarRegistry = Partial<{
 }>;
 
 export const SIDEbars: SidebarRegistry = {
-  [PdfAnnotationSubtype.INK]: { component: InkSidebar, title: 'Ink' },
-  [PdfAnnotationSubtype.POLYGON]: { component: PolygonSidebar, title: 'Polygon' },
-  [PdfAnnotationSubtype.SQUARE]: { component: ShapeSidebar, title: 'Square' },
-  [PdfAnnotationSubtype.CIRCLE]: { component: ShapeSidebar, title: 'Circle' },
+  [PdfAnnotationSubtype.INK]: { component: InkSidebar, title: '绘制' },
+  [PdfAnnotationSubtype.POLYGON]: { component: PolygonSidebar, title: '多边形' },
+  [PdfAnnotationSubtype.SQUARE]: { component: ShapeSidebar, title: '矩形' },
+  [PdfAnnotationSubtype.CIRCLE]: { component: ShapeSidebar, title: '圆形' },
 
   [PdfAnnotationSubtype.LINE]: {
     component: LineSidebar,
-    title: (p) => (p.activeTool?.id === 'lineArrow' ? 'Arrow' : 'Line'),
+    title: (p) => (p.activeTool?.id === 'lineArrow' ? '箭头' : '直线'),
   },
-  [PdfAnnotationSubtype.POLYLINE]: { component: LineSidebar, title: 'Polyline' },
+  [PdfAnnotationSubtype.POLYLINE]: { component: LineSidebar, title: '折线' },
 
-  [PdfAnnotationSubtype.HIGHLIGHT]: { component: TextMarkupSidebar, title: 'Highlight' },
-  [PdfAnnotationSubtype.UNDERLINE]: { component: TextMarkupSidebar, title: 'Underline' },
-  [PdfAnnotationSubtype.STRIKEOUT]: { component: TextMarkupSidebar, title: 'Strikeout' },
-  [PdfAnnotationSubtype.SQUIGGLY]: { component: TextMarkupSidebar, title: 'Squiggly' },
-  [PdfAnnotationSubtype.FREETEXT]: { component: FreeTextSidebar, title: 'Free text' },
-  [PdfAnnotationSubtype.STAMP]: { component: StampSidebar, title: 'Stamp' },
+  [PdfAnnotationSubtype.HIGHLIGHT]: { component: TextMarkupSidebar, title: '高亮' },
+  [PdfAnnotationSubtype.UNDERLINE]: { component: TextMarkupSidebar, title: '下划线' },
+  [PdfAnnotationSubtype.STRIKEOUT]: { component: TextMarkupSidebar, title: '删除线' },
+  [PdfAnnotationSubtype.SQUIGGLY]: { component: TextMarkupSidebar, title: '波浪线' },
+  [PdfAnnotationSubtype.FREETEXT]: { component: FreeTextSidebar, title: '文字' },
+  [PdfAnnotationSubtype.STAMP]: { component: StampSidebar, title: '图章' },
 };

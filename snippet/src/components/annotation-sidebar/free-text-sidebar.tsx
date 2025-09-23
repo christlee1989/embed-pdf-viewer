@@ -166,11 +166,11 @@ export const FreeTextSidebar = ({
   /* ────────────────────────  Render  ─────────────────────────────────── */
   return (
     <Fragment>
-      {/* font family + style */}
+      {/* 字体与样式 */}
       <section class="mb-6">
-        <label class="mb-2 block text-sm font-medium text-gray-900">Font</label>
+        <label class="mb-2 block text-sm font-medium text-gray-900">字体</label>
 
-        {/* Family + size */}
+        {/* 字体与字号 */}
         <div class="mb-3 flex gap-2">
           <FontFamilySelect value={fontFamily} onChange={onFamilyChange} />
           <div class="w-36">
@@ -178,11 +178,11 @@ export const FreeTextSidebar = ({
           </div>
         </div>
 
-        {/* Bold / Italic toggles */}
+        {/* 加粗 / 斜体 开关 */}
         <div class="flex gap-2">
           <button
             type="button"
-            title="Bold"
+            title="加粗"
             disabled={
               !standardFontIsBold(makeStandardFont(fontFamily, { bold: true, italic: false }))
             }
@@ -196,7 +196,7 @@ export const FreeTextSidebar = ({
 
           <button
             type="button"
-            title="Italic"
+            title="斜体"
             disabled={
               !standardFontIsItalic(makeStandardFont(fontFamily, { bold: false, italic: true }))
             }
@@ -210,13 +210,13 @@ export const FreeTextSidebar = ({
         </div>
       </section>
 
-      {/* text alignment */}
+      {/* 文本对齐 */}
       <section class="mb-6">
-        <label class="mb-2 block text-sm font-medium text-gray-900">Text alignment</label>
+        <label class="mb-2 block text-sm font-medium text-gray-900">文本对齐</label>
         <div class="flex gap-2">
           <button
             type="button"
-            title="Align left"
+            title="左对齐"
             onClick={() => changeTextAlign(PdfTextAlignment.Left)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               textAlign === PdfTextAlignment.Left
@@ -228,7 +228,7 @@ export const FreeTextSidebar = ({
           </button>
           <button
             type="button"
-            title="Align center"
+            title="居中对齐"
             onClick={() => changeTextAlign(PdfTextAlignment.Center)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               textAlign === PdfTextAlignment.Center
@@ -240,7 +240,7 @@ export const FreeTextSidebar = ({
           </button>
           <button
             type="button"
-            title="Align right"
+            title="右对齐"
             onClick={() => changeTextAlign(PdfTextAlignment.Right)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               textAlign === PdfTextAlignment.Right
@@ -253,13 +253,13 @@ export const FreeTextSidebar = ({
         </div>
       </section>
 
-      {/* vertical alignment */}
+      {/* 垂直对齐 */}
       <section class="mb-6">
-        <label class="mb-2 block text-sm font-medium text-gray-900">Vertical alignment</label>
+        <label class="mb-2 block text-sm font-medium text-gray-900">垂直对齐</label>
         <div class="flex gap-2">
           <button
             type="button"
-            title="Align top"
+            title="顶部对齐"
             onClick={() => changeVerticalAlign(PdfVerticalAlignment.Top)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               verticalAlign === PdfVerticalAlignment.Top
@@ -271,7 +271,7 @@ export const FreeTextSidebar = ({
           </button>
           <button
             type="button"
-            title="Align middle"
+            title="居中对齐"
             onClick={() => changeVerticalAlign(PdfVerticalAlignment.Middle)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               verticalAlign === PdfVerticalAlignment.Middle
@@ -283,7 +283,7 @@ export const FreeTextSidebar = ({
           </button>
           <button
             type="button"
-            title="Align bottom"
+            title="底部对齐"
             onClick={() => changeVerticalAlign(PdfVerticalAlignment.Bottom)}
             class={`h-9 w-9 rounded border border-gray-300 px-2 py-1 text-sm ${
               verticalAlign === PdfVerticalAlignment.Bottom
@@ -296,9 +296,9 @@ export const FreeTextSidebar = ({
         </div>
       </section>
 
-      {/* font colour */}
+      {/* 文字颜色 */}
       <section class="mb-6">
-        <label class="mb-3 block text-sm font-medium text-gray-900">Font colour</label>
+        <label class="mb-3 block text-sm font-medium text-gray-900">文字颜色</label>
         <div class="grid grid-cols-6 gap-x-1 gap-y-4">
           {colorPresets.map((c) => (
             <ColorSwatch key={c} color={c} active={c === fontColor} onSelect={changeFontColor} />
@@ -306,9 +306,9 @@ export const FreeTextSidebar = ({
         </div>
       </section>
 
-      {/* background colour */}
+      {/* 背景颜色 */}
       <section class="mb-6">
-        <label class="mb-3 block text-sm font-medium text-gray-900">Background colour</label>
+        <label class="mb-3 block text-sm font-medium text-gray-900">背景颜色</label>
         <div class="grid grid-cols-6 gap-x-1 gap-y-4">
           {colorPresets.map((c) => (
             <ColorSwatch
@@ -327,9 +327,9 @@ export const FreeTextSidebar = ({
         </div>
       </section>
 
-      {/* opacity */}
+      {/* 不透明度 */}
       <section class="mb-6">
-        <label class="mb-1 block text-sm font-medium text-gray-900">Opacity</label>
+        <label class="mb-1 block text-sm font-medium text-gray-900">不透明度</label>
         <Slider value={opacity} min={0.1} max={1} step={0.05} onChange={setOpacity} />
         <span class="text-xs text-gray-500">{Math.round(opacity * 100)}%</span>
       </section>

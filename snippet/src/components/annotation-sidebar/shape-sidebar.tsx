@@ -71,9 +71,9 @@ export const ShapeSidebar = ({
 
   return (
     <Fragment>
-      {/* fill color */}
+      {/* 填充颜色 */}
       <section class="mb-6">
-        <label class="mb-3 block text-sm font-medium text-gray-900">Fill color</label>
+        <label class="mb-3 block text-sm font-medium text-gray-900">填充颜色</label>
         <div class="grid grid-cols-6 gap-x-1 gap-y-4">
           {colorPresets.map((c) => (
             <ColorSwatch key={c} color={c} active={c === fill} onSelect={changeFill} />
@@ -82,16 +82,16 @@ export const ShapeSidebar = ({
         </div>
       </section>
 
-      {/* opacity */}
+      {/* 不透明度 */}
       <section class="mb-6">
-        <label class="mb-1 block text-sm font-medium text-gray-900">Opacity</label>
+        <label class="mb-1 block text-sm font-medium text-gray-900">不透明度</label>
         <Slider value={opacity} min={0.1} max={1} step={0.05} onChange={setOpac} />
         <span class="text-xs text-gray-500">{Math.round(opacity * 100)}%</span>
       </section>
 
-      {/* stroke color */}
+      {/* 轮廓颜色 */}
       <section class="mb-6">
-        <label class="mb-3 block text-sm font-medium text-gray-900">Stroke color</label>
+        <label class="mb-3 block text-sm font-medium text-gray-900">轮廓颜色</label>
         <div class="grid grid-cols-6 gap-x-1 gap-y-4">
           {colorPresets.map((c) => (
             <ColorSwatch key={c} color={c} active={c === stroke} onSelect={changeStroke} />
@@ -99,15 +99,15 @@ export const ShapeSidebar = ({
         </div>
       </section>
 
-      {/* stroke style */}
+      {/* 轮廓样式 */}
       <section class="mb-6">
-        <label class="mb-3 block text-sm font-medium text-gray-900">Stroke style</label>
+        <label class="mb-3 block text-sm font-medium text-gray-900">轮廓样式</label>
         <StrokeStyleSelect value={style} onChange={changeStyle} />
       </section>
 
-      {/* stroke-width */}
+      {/* 轮廓宽度 */}
       <section class="mb-6">
-        <label class="mb-1 block text-sm font-medium text-gray-900">Stroke width</label>
+        <label class="mb-1 block text-sm font-medium text-gray-900">轮廓宽度</label>
         <Slider value={strokeW} min={1} max={30} step={1} onChange={setWidth} />
         <span class="text-xs text-gray-500">{strokeW}px</span>
       </section>

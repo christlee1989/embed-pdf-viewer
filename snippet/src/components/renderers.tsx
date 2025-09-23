@@ -14,6 +14,7 @@ import {
   ResolvedMenuItem,
   SelectButtonProps,
   TabButtonProps,
+  TextButtonProps,
 } from '@embedpdf/plugin-ui';
 import { h, Fragment } from 'preact';
 import { Button } from './ui/button';
@@ -97,12 +98,13 @@ export const iconButtonRenderer: ComponentRenderFunction<IconButtonProps> = (
         active={active}
         onClick={handleClick}
         disabled={disabled}
-        className={` ${context?.variant === 'flyout' ? 'w-full rounded-none px-2' : ''} `}
+        className={`${props.showLabel ? 'flex-col items-center justify-center h-auto' : ''} ${context?.variant === 'flyout' ? 'w-full rounded-none px-2' : ''} `}
       >
         {!command?.icon && props.img && (
           <img src={props.img} alt={props.label} className="h-5 w-5" />
         )}
         {command?.icon && <Icon icon={command.icon} className="h-5 w-5" {...iconProps} />}
+        {props.showLabel && <span className={`text-sm ${active ? 'text-blue-500' : 'text-gray-600'}`}>{props.label}</span>}
       </Button>
     </Tooltip>
   );
@@ -138,6 +140,42 @@ export const tabButtonRenderer: ComponentRenderFunction<TabButtonProps> = (
     <Button
       key={props.id}
       className={`rounded-none px-2 py-1 text-sm hover:bg-transparent ${active ? 'border-b-2 border-b-blue-500 text-blue-500' : 'border-b-2 border-b-transparent hover:border-b-gray-500'} hover:ring-transparent`}
+      onClick={handleClick}
+    >
+      {props.label}
+    </Button>
+  );
+};
+
+export const textButtonRenderer: ComponentRenderFunction<TextButtonProps> = (
+  { commandId, onClick, active, ...props },
+  children,
+) => {
+  const { provides: ui } = useUICapability();
+  const command = commandId ? ui?.getMenuOrAction(commandId) : null;
+
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (onClick) {
+        onClick();
+        return;
+      }
+      if (!commandId || !ui || !command) return;
+
+      ui.executeCommand(commandId, {
+        source: 'click',
+      });
+    },
+    [command, commandId, ui, onClick],
+  );
+
+  return (
+    <Button
+      key={props.id}
+      className={`rounded px-3 py-1 text-sm border ${active ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-800 border-gray-300'} hover:bg-blue-100 hover:text-blue-600 hover:border-blue-400 transition-colors`}
       onClick={handleClick}
     >
       {props.label}
@@ -470,7 +508,7 @@ export const searchRenderer: ComponentRenderFunction<SearchRendererProps> = (pro
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search"
+            placeholder="搜索"
             autoFocus
             value={inputValue}
             onInput={handleInputChange}
@@ -498,12 +536,12 @@ export const searchRenderer: ComponentRenderFunction<SearchRendererProps> = (pro
         </div>
         <div className="mt-3 flex flex-row gap-4">
           <Checkbox
-            label="Case sensitive"
+            label="区分大小写"
             checked={props.flags.includes(MatchFlag.MatchCase)}
             onChange={(checked) => handleFlagChange(MatchFlag.MatchCase, checked)}
           />
           <Checkbox
-            label="Whole word"
+            label="整词匹配"
             checked={props.flags.includes(MatchFlag.MatchWholeWord)}
             onChange={(checked) => handleFlagChange(MatchFlag.MatchWholeWord, checked)}
           />
@@ -511,7 +549,7 @@ export const searchRenderer: ComponentRenderFunction<SearchRendererProps> = (pro
         <hr className="mb-2 mt-5 border-gray-200" />
         {props.active && (
           <div className="flex h-[32px] flex-row items-center justify-between">
-            <div className="text-xs text-gray-500">{props.total} results found</div>
+            <div className="text-xs text-gray-500">找到 {props.total} 个结果</div>
             {props.total > 1 && (
               <div className="flex flex-row">
                 <Button
@@ -537,7 +575,7 @@ export const searchRenderer: ComponentRenderFunction<SearchRendererProps> = (pro
         {Object.entries(grouped).map(([page, hits]) => (
           <div key={page} className="mt-2 first:mt-0">
             <div className="bg-white/80 py-2 text-xs text-gray-500 backdrop-blur">
-              Page {Number(page) + 1}
+              第 {Number(page) + 1} 页
             </div>
 
             <div className="flex flex-col gap-2">
@@ -622,7 +660,7 @@ export const zoomRenderer: ComponentRenderFunction<ZoomRendererProps> = (
           inputMode="numeric"
           pattern="\d*"
           className="h-6 w-8 border-0 bg-transparent p-0 text-right text-sm"
-          aria-label="Set zoom"
+          aria-label="设置缩放"
           autoFocus={false}
           value={zoomPercentage}
           onInput={(e) => {
@@ -635,7 +673,7 @@ export const zoomRenderer: ComponentRenderFunction<ZoomRendererProps> = (
       </form>
       <Tooltip
         position={context?.direction === 'horizontal' ? 'bottom' : 'right'}
-        content={'Zoom Options'}
+        content={'缩放选项'}
         trigger={props.zoomMenuActive ? 'none' : 'hover'}
       >
         <Button
@@ -662,7 +700,7 @@ export const zoomRenderer: ComponentRenderFunction<ZoomRendererProps> = (
       </Tooltip>
       <Tooltip
         position={context?.direction === 'horizontal' ? 'bottom' : 'right'}
-        content={'Zoom Out'}
+        content={'缩小'}
         trigger={'hover'}
       >
         <Button className="p-1" onClick={(e) => handleClick(e, commandZoomOut)}>
@@ -671,7 +709,7 @@ export const zoomRenderer: ComponentRenderFunction<ZoomRendererProps> = (
       </Tooltip>
       <Tooltip
         position={context?.direction === 'horizontal' ? 'bottom' : 'right'}
-        content={'Zoom In'}
+        content={'放大'}
         trigger={'hover'}
       >
         <Button className="p-1" onClick={(e) => handleClick(e, commandZoomIn)}>
@@ -828,7 +866,7 @@ export const pageControlsRenderer: ComponentRenderFunction<PageControlsProps> = 
 
   return (
     <div className="flex flex-row items-center justify-between gap-3 rounded-md">
-      <Tooltip position={'top'} content={'Previous Page'} trigger={isFirstPage ? 'none' : 'hover'}>
+      <Tooltip position={'top'} content={'上一页'} trigger={isFirstPage ? 'none' : 'hover'}>
         <Button
           className={`p-1 ${isFirstPage ? 'cursor-not-allowed opacity-50 hover:ring-0' : ''}`}
           onClick={(e) => handleClick(e, commandPreviousPage)}
@@ -846,7 +884,7 @@ export const pageControlsRenderer: ComponentRenderFunction<PageControlsProps> = 
           inputMode="numeric"
           pattern="\d*"
           className="border-1 h-8 w-8 rounded-md border-gray-600 bg-white p-0 text-center text-sm"
-          aria-label="Set page"
+          aria-label="设置页码"
           value={props.currentPage}
           onInput={(e) => {
             // Only allow numbers
@@ -856,7 +894,7 @@ export const pageControlsRenderer: ComponentRenderFunction<PageControlsProps> = 
         />
         <span className="text-sm">{props.pageCount}</span>
       </form>
-      <Tooltip position={'top'} content={'Next Page'} trigger={isLastPage ? 'none' : 'hover'}>
+      <Tooltip position={'top'} content={'下一页'} trigger={isLastPage ? 'none' : 'hover'}>
         <Button
           className={`p-1 ${isLastPage ? 'cursor-not-allowed opacity-50 hover:ring-0' : ''}`}
           onClick={(e) => handleClick(e, commandNextPage)}
@@ -1175,8 +1213,8 @@ export const outlineRenderer: ComponentRenderFunction<OutlineRenderProps> = (pro
     return (
       <div className="flex h-full items-center justify-center p-6">
         <div className="text-center text-gray-500">
-          <div className="text-sm">No outline available</div>
-          <div className="mt-1 text-xs">This document doesn't contain bookmarks</div>
+          <div className="text-sm">没有可用大纲</div>
+          <div className="mt-1 text-xs">该文档不包含书签</div>
         </div>
       </div>
     );
@@ -1366,11 +1404,11 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
   const canSubmit = (selection !== 'custom' || customPages.trim().length > 0) && !isLoading;
 
   return (
-    <Dialog open={props.open} title="Print Settings" onClose={handleClose} maxWidth="28rem">
+    <Dialog open={props.open} title="打印设置" onClose={handleClose} maxWidth="28rem">
       <div className="space-y-6">
         {/* Pages to print */}
         <div>
-          <label className="mb-3 block text-sm font-medium text-gray-700">Pages to print</label>
+          <label className="mb-3 block text-sm font-medium text-gray-700">打印页数</label>
           <div className="space-y-2">
             <label className="flex items-center">
               <input
@@ -1382,7 +1420,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
                 disabled={isLoading}
                 className="mr-2"
               />
-              <span className="text-sm">All pages</span>
+              <span className="text-sm">全部页面</span>
             </label>
 
             <label className="flex items-center">
@@ -1395,7 +1433,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
                 disabled={isLoading}
                 className="mr-2"
               />
-              <span className="text-sm">Current page ({currentPage})</span>
+              <span className="text-sm">当前页（{currentPage}）</span>
             </label>
 
             <label className="flex items-start">
@@ -1409,10 +1447,10 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
                 className="mr-2 mt-0.5"
               />
               <div className="flex-1">
-                <span className="mb-1 block text-sm">Specify pages</span>
+                <span className="mb-1 block text-sm">指定页码</span>
                 <input
                   type="text"
-                  placeholder="e.g., 1-3, 5, 8-10"
+                  placeholder="例如：1-3, 5, 8-10"
                   value={customPages}
                   onInput={(e) => setCustomPages((e.target as HTMLInputElement).value)}
                   disabled={selection !== 'custom' || isLoading}
@@ -1423,9 +1461,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
                   } focus:outline-none focus:ring-1`}
                 />
                 {selection === 'custom' && customPages.trim() && totalPages > 0 && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    Total pages in document: {totalPages}
-                  </p>
+                  <p className="mt-1 text-xs text-gray-500">文档总页数：{totalPages}</p>
                 )}
               </div>
             </label>
@@ -1442,7 +1478,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
               disabled={isLoading}
               className="mr-2"
             />
-            <span className="text-sm font-medium text-gray-700">Include annotations</span>
+            <span className="text-sm font-medium text-gray-700">包含标注</span>
           </label>
         </div>
 
@@ -1482,7 +1518,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
             disabled={isLoading}
             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Cancel
+            取消
           </Button>
           <Button
             onClick={handlePrint}
@@ -1511,7 +1547,7 @@ export const printModalRenderer: ComponentRenderFunction<PrintModalProps> = (pro
                 ></path>
               </svg>
             )}
-            <span>{isLoading ? 'Printing...' : 'Print'}</span>
+            <span>{isLoading ? '正在打印…' : '打印'}</span>
           </Button>
         </div>
       </div>

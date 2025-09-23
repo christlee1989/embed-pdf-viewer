@@ -13,7 +13,7 @@ export const defaultTools = [
   // Text Markup Tools
   {
     id: 'highlight' as const,
-    name: 'Highlight',
+    name: '高亮',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.HIGHLIGHT ? 1 : 0),
     interaction: {
       exclusive: false,
@@ -28,7 +28,7 @@ export const defaultTools = [
   },
   {
     id: 'underline' as const,
-    name: 'Underline',
+    name: '下划线',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.UNDERLINE ? 1 : 0),
     interaction: {
       exclusive: false,
@@ -42,7 +42,7 @@ export const defaultTools = [
   },
   {
     id: 'strikeout' as const,
-    name: 'Strikeout',
+    name: '删除线',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.STRIKEOUT ? 1 : 0),
     interaction: {
       exclusive: false,
@@ -56,7 +56,7 @@ export const defaultTools = [
   },
   {
     id: 'squiggly' as const,
-    name: 'Squiggly',
+    name: '波浪线',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.SQUIGGLY ? 1 : 0),
     interaction: {
       exclusive: false,
@@ -72,7 +72,7 @@ export const defaultTools = [
   // Drawing Tools
   {
     id: 'ink' as const,
-    name: 'Pen',
+    name: '绘制',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.INK && a.intent !== 'InkHighlight' ? 5 : 0),
     interaction: {
       exclusive: false,
@@ -87,7 +87,7 @@ export const defaultTools = [
   },
   {
     id: 'inkHighlighter' as const,
-    name: 'Ink Highlighter',
+    name: '荧光笔',
     matchScore: (a) =>
       a.type === PdfAnnotationSubtype.INK && a.intent === 'InkHighlight' ? 10 : 0,
     interaction: {
@@ -107,7 +107,7 @@ export const defaultTools = [
   // Shape Tools
   {
     id: 'circle' as const,
-    name: 'Circle',
+    name: '圆形',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.CIRCLE ? 1 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -125,7 +125,7 @@ export const defaultTools = [
   },
   {
     id: 'square' as const,
-    name: 'Square',
+    name: '矩形',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.SQUARE ? 1 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -143,7 +143,7 @@ export const defaultTools = [
   },
   {
     id: 'line' as const,
-    name: 'Line',
+    name: '直线',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.LINE && a.intent !== 'LineArrow' ? 5 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -161,7 +161,7 @@ export const defaultTools = [
   },
   {
     id: 'lineArrow' as const,
-    name: 'Arrow',
+    name: '箭头',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.LINE && a.intent === 'LineArrow' ? 10 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -184,7 +184,7 @@ export const defaultTools = [
   },
   {
     id: 'polyline' as const,
-    name: 'Polyline',
+    name: '折线',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.POLYLINE ? 1 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -197,7 +197,7 @@ export const defaultTools = [
   },
   {
     id: 'polygon' as const,
-    name: 'Polygon',
+    name: '多边形',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.POLYGON ? 1 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
@@ -212,12 +212,12 @@ export const defaultTools = [
   // Text & Stamp
   {
     id: 'freeText' as const,
-    name: 'Free Text',
+    name: '文字',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.FREETEXT ? 1 : 0),
     interaction: { exclusive: false, cursor: 'crosshair' },
     defaults: {
       type: PdfAnnotationSubtype.FREETEXT,
-      contents: 'Insert text',
+      contents: '在此输入文字',
       fontSize: 14,
       fontColor: '#E44234',
       fontFamily: PdfStandardFont.Helvetica,
@@ -229,12 +229,12 @@ export const defaultTools = [
     clickBehavior: {
       enabled: true,
       defaultSize: { width: 100, height: 20 },
-      defaultContent: 'Insert text',
+      defaultContent: '在此输入文字',
     },
   },
   {
     id: 'stamp' as const,
-    name: 'Image',
+    name: '图片',
     matchScore: (a) => (a.type === PdfAnnotationSubtype.STAMP ? 1 : 0),
     interaction: { exclusive: false, cursor: 'copy' },
     defaults: {

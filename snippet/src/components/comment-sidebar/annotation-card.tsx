@@ -36,7 +36,7 @@ export const AnnotationCard = ({
   const hasReplies = replies.length > 0;
   const showCommentInput = !hasContent && !hasReplies;
   const inputRef = useRef<HTMLInputElement>(null);
-  const author = annotation.object.author || 'Guest';
+  const author = annotation.object.author || '访客';
 
   useEffect(() => {
     if (isSelected) {
@@ -136,7 +136,7 @@ export const AnnotationCard = ({
           <AnnotationInput
             inputRef={inputRef}
             isFocused={isSelected}
-            placeholder={showCommentInput ? 'Add comment...' : 'Add reply...'}
+            placeholder={showCommentInput ? '添加评论…' : '添加回复…'}
             onSubmit={(text) => {
               if (showCommentInput) {
                 onUpdate(annotation.object.id, text);

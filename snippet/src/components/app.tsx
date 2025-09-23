@@ -79,6 +79,7 @@ import {
   zoomRenderer,
   ZoomRendererProps,
   printModalRenderer,
+  textButtonRenderer,
 } from './renderers';
 import { leftPanelAnnotationStyleRenderer } from './annotation-sidebar';
 import {
@@ -269,7 +270,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   menuCtr: {
     id: 'menuCtr',
     icon: 'menu',
-    label: 'Menu',
+    label: '菜单',
     //shortcut: 'Shift+M',
     //shortcutLabel: 'M',
     type: 'menu',
@@ -280,7 +281,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   download: {
     id: 'download',
     icon: 'download',
-    label: 'Download',
+    label: '下载',
     //shortcut: 'Shift+D',
     //shortcutLabel: 'D',
     type: 'action',
@@ -294,7 +295,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   openFile: {
     id: 'openFile',
     icon: 'fileImport',
-    label: 'Open PDF',
+    label: '打开 PDF',
     type: 'action',
     action: (registry) => {
       const loader = registry.getPlugin<LoaderPlugin>(LOADER_PLUGIN_ID)?.provides();
@@ -313,8 +314,8 @@ export const menuItems: Record<string, MenuItem<State>> = {
     },
     label: (storeState) => {
       const fullscreen = storeState.plugins.fullscreen.isFullscreen
-        ? 'Exit full screen'
-        : 'Enter full screen';
+        ? '退出全屏'
+        : '进入全屏';
       return fullscreen;
     },
     //shortcut: 'Shift+F',
@@ -334,7 +335,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   screenshot: {
     id: 'screenshot',
     icon: 'screenshot',
-    label: 'Screenshot',
+    label: '截图',
     type: 'action',
     action: (registry) => {
       const capture = registry.getPlugin<CapturePlugin>(CAPTURE_PLUGIN_ID)?.provides();
@@ -352,7 +353,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   save: {
     id: 'save',
     icon: 'save',
-    label: 'Save',
+    label: '保存',
     //shortcut: 'Shift+S',
     //shortcutLabel: 'S',
     type: 'action',
@@ -363,7 +364,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   print: {
     id: 'print',
     icon: 'print',
-    label: 'Print',
+    label: '打印',
     //shortcut: 'Shift+P',
     //shortcutLabel: 'P',
     type: 'action',
@@ -383,7 +384,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   settings: {
     id: 'settings',
     icon: 'settings',
-    label: 'Settings',
+    label: '设置',
     //shortcut: 'Shift+E',
     //shortcutLabel: 'E',
     dividerBefore: true,
@@ -396,7 +397,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   viewCtr: {
     id: 'viewCtr',
     icon: 'viewSettings',
-    label: 'View controls',
+    label: '视图设置',
     //shortcut: 'Shift+V',
     //shortcutLabel: 'V',
     type: 'menu',
@@ -406,13 +407,13 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   pageOrientation: {
     id: 'pageOrientation',
-    label: 'Page orientation',
+    label: '页面方向',
     type: 'group',
     children: ['rotateClockwise', 'rotateCounterClockwise'],
   },
   rotateClockwise: {
     id: 'rotateClockwise',
-    label: 'Rotate clockwise',
+    label: '顺时针旋转',
     icon: 'rotateClockwise',
     type: 'action',
     action: (registry) => {
@@ -424,7 +425,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   rotateCounterClockwise: {
     id: 'rotateCounterClockwise',
-    label: 'Rotate counter clockwise',
+    label: '逆时针旋转',
     icon: 'rotateCounterClockwise',
     type: 'action',
     action: (registry) => {
@@ -436,13 +437,13 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   scrollLayout: {
     id: 'scrollLayout',
-    label: 'Scroll layout',
+    label: '滚动布局',
     type: 'group',
     children: ['vertical', 'horizontal'],
   },
   vertical: {
     id: 'vertical',
-    label: 'Vertical',
+    label: '垂直',
     icon: 'vertical',
     type: 'action',
     active: (storeState) => storeState.plugins.scroll.strategy === ScrollStrategy.Vertical,
@@ -455,7 +456,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   horizontal: {
     id: 'horizontal',
-    label: 'Horizontal',
+    label: '水平',
     icon: 'horizontal',
     type: 'action',
     active: (storeState) => storeState.plugins.scroll.strategy === ScrollStrategy.Horizontal,
@@ -468,13 +469,13 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   pageLayout: {
     id: 'pageLayout',
-    label: 'Page layout',
+    label: '页面布局',
     type: 'group',
     children: ['singlePage', 'doublePage', 'coverFacingPage'],
   },
   singlePage: {
     id: 'singlePage',
-    label: 'Single page',
+    label: '单页',
     icon: 'singlePage',
     type: 'action',
     disabled: (storeState) => storeState.plugins.scroll.strategy === ScrollStrategy.Horizontal,
@@ -488,7 +489,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   doublePage: {
     id: 'doublePage',
-    label: 'Double page',
+    label: '双页',
     icon: 'book',
     type: 'action',
     disabled: (storeState) => storeState.plugins.scroll.strategy === ScrollStrategy.Horizontal,
@@ -502,7 +503,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   coverFacingPage: {
     id: 'coverFacingPage',
-    label: 'Cover facing page',
+    label: '封面对页',
     icon: 'book2',
     type: 'action',
     disabled: (storeState) => storeState.plugins.scroll.strategy === ScrollStrategy.Horizontal,
@@ -516,7 +517,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   leftAction: {
     id: 'leftAction',
-    label: 'Left action',
+    label: '左侧操作',
     type: 'menu',
     icon: 'dots',
     children: ['viewCtr', 'zoom', 'panMode', 'pointerMode'],
@@ -529,7 +530,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   zoom: {
     id: 'zoom',
     icon: 'zoomIn',
-    label: 'Zoom Controls',
+    label: '缩放控制',
     //shortcut: 'Shift+Z',
     //shortcutLabel: 'Z',
     type: 'menu',
@@ -538,7 +539,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   zoomInArea: {
     id: 'zoomInArea',
-    label: 'Zoom in area',
+    label: '框选放大',
     icon: 'zoomInArea',
     type: 'action',
     dividerBefore: true,
@@ -558,7 +559,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   changeZoomLevel: {
     id: 'changeZoomLevel',
     label: (storeState) =>
-      `Zoom level (${(storeState.plugins.zoom.currentZoomLevel * 100).toFixed(0)}%)`,
+      `缩放级别（${(storeState.plugins.zoom.currentZoomLevel * 100).toFixed(0)}%）`,
     type: 'menu',
     children: [
       'zoom25',
@@ -693,7 +694,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   zoomIn: {
     id: 'zoomIn',
-    label: 'Zoom in',
+    label: '放大',
     icon: 'zoomIn',
     type: 'action',
     action: (registry) => {
@@ -706,7 +707,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   zoomOut: {
     id: 'zoomOut',
-    label: 'Zoom out',
+    label: '缩小',
     icon: 'zoomOut',
     type: 'action',
     action: (registry) => {
@@ -719,7 +720,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   search: {
     id: 'search',
-    label: 'Search',
+    label: '搜索',
     icon: 'search',
     type: 'action',
     action: (registry) => {
@@ -735,7 +736,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   comment: {
     id: 'comment',
-    label: 'Comment',
+    label: '评论',
     icon: 'comment',
     type: 'action',
     action: (registry) => {
@@ -751,7 +752,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   fitToWidth: {
     id: 'fitToWidth',
-    label: 'Fit to width',
+    label: '适应宽度',
     icon: 'fitToWidth',
     type: 'action',
     active: (storeState) => storeState.plugins.zoom.zoomLevel === ZoomMode.FitWidth,
@@ -765,7 +766,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   fitToPage: {
     id: 'fitToPage',
-    label: 'Fit to page',
+    label: '适应页面',
     icon: 'fitToPage',
     type: 'action',
     active: (storeState) => storeState.plugins.zoom.zoomLevel === ZoomMode.FitPage,
@@ -779,7 +780,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   sidebar: {
     id: 'sidebar',
-    label: 'Sidebar',
+    label: '侧边栏',
     icon: 'sidebar',
     type: 'action',
     action: (registry, state) => {
@@ -803,13 +804,13 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   sidebarMenu: {
     id: 'sidebarMenu',
-    label: 'Sidebar Menu',
+    label: '侧边栏菜单',
     type: 'menu',
     children: ['thumbnails', 'outline' /*'attachments'*/],
   },
   thumbnails: {
     id: 'thumbnails',
-    label: 'Thumbnails',
+    label: '缩略图',
     icon: 'squares',
     type: 'action',
     action: (registry) => {
@@ -831,7 +832,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   outline: {
     id: 'outline',
-    label: 'Outline',
+    label: '大纲',
     icon: 'listTree',
     type: 'action',
     action: (registry) => {
@@ -852,7 +853,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   attachments: {
     id: 'attachments',
-    label: 'Attachments',
+    label: '附件',
     icon: 'paperclip',
     type: 'action',
     action: (registry) => {
@@ -874,7 +875,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   view: {
     id: 'view',
-    label: 'View',
+    label: '查看',
     type: 'action',
     //shortcut: 'Shift+V',
     //shortcutLabel: 'V',
@@ -890,7 +891,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   annotate: {
     id: 'annotate',
-    label: 'Annotate',
+    label: '标注',
     type: 'action',
     //shortcut: 'Shift+A',
     //shortcutLabel: 'A',
@@ -907,7 +908,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   shapes: {
     id: 'shapes',
-    label: 'Shapes',
+    label: '形状',
     type: 'action',
     //shortcut: 'Shift+S',
     //shortcutLabel: 'S',
@@ -924,7 +925,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   redaction: {
     id: 'redaction',
-    label: 'Redaction',
+    label: '涂黑',
     type: 'action',
     action: (registry) => {
       const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
@@ -939,7 +940,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   fillAndSign: {
     id: 'fillAndSign',
-    label: 'Fill and Sign',
+    label: '填写与签名',
     type: 'action',
     action: (registry) => {
       const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
@@ -954,7 +955,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   form: {
     id: 'form',
-    label: 'Form',
+    label: '表单',
     type: 'action',
     action: (registry) => {
       const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
@@ -967,9 +968,47 @@ export const menuItems: Record<string, MenuItem<State>> = {
       storeState.plugins.ui.header.toolsHeader.visible === true &&
       storeState.plugins.ui.header.toolsHeader.visibleChild === 'formTools',
   },
+  host: {
+    id: 'host',
+    label: '主持',
+    type: 'action',
+    action: (registry) => {
+      console.log('### 主持测试 ###')
+      const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
+      if (ui) {
+        // 获取当前状态并反转
+        const currentActive = ui.getComponent('hostBtn')?.props?.active || false;
+        ui.updateComponentState({
+          componentType: 'textButton',
+          componentId: 'hostBtn',
+          patch: { active: !currentActive }
+        });
+      }
+    },
+    active: (storeState) => storeState.plugins.ui.textButton.hostBtn?.active === true,
+  },
+  follow: {
+    id: 'follow',
+    label: '跟随',
+    type: 'action',
+    action: (registry) => {
+      console.log('### 跟随测试 ###')
+      const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
+      if (ui) {
+        // 获取当前状态并反转
+        const currentActive = ui.getComponent('followBtn')?.props?.active || false;
+        ui.updateComponentState({
+          componentType: 'textButton',
+          componentId: 'followBtn',
+          patch: { active: !currentActive }
+        });
+      }
+    },
+    active: (storeState) => storeState.plugins.ui.textButton.followBtn?.active === true,
+  },
   tabOverflow: {
     id: 'tabOverflow',
-    label: 'More',
+    label: '更多',
     icon: 'dots',
     type: 'menu',
     children: ['view', 'annotate', 'shapes', 'redaction' /*'fillAndSign', 'form'*/],
@@ -978,7 +1017,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   annotationToolOverflow: {
     id: 'annotationToolOverflow',
-    label: 'More',
+    label: '更多',
     icon: 'dots',
     type: 'menu',
     children: [
@@ -995,7 +1034,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   shapeToolOverflow: {
     id: 'shapeToolOverflow',
-    label: 'More',
+    label: '更多',
     icon: 'dots',
     type: 'menu',
     children: ['circle', 'square', 'polygon', 'polyline', 'line', 'lineArrow'],
@@ -1004,7 +1043,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   nextPage: {
     id: 'nextPage',
-    label: 'Next page',
+    label: '下一页',
     icon: 'chevronRight',
     shortcut: 'ArrowRight',
     shortcutLabel: 'Arrow Right',
@@ -1019,7 +1058,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   previousPage: {
     id: 'previousPage',
-    label: 'Previous page',
+    label: '上一页',
     icon: 'chevronLeft',
     type: 'action',
     shortcut: 'ArrowLeft',
@@ -1034,7 +1073,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   copy: {
     id: 'copy',
-    label: 'Copy',
+    label: '复制',
     icon: 'copy',
     type: 'action',
     shortcut: 'Meta+C',
@@ -1049,7 +1088,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   underline: {
     id: 'underline',
-    label: 'Underline',
+    label: '下划线',
     type: 'action',
     icon: 'underline',
     iconProps: (storeState) => ({
@@ -1069,7 +1108,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   squiggly: {
     id: 'squiggly',
-    label: 'Squiggly',
+    label: '波浪线',
     type: 'action',
     icon: 'squiggly',
     iconProps: (storeState) => ({
@@ -1089,7 +1128,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   strikethrough: {
     id: 'strikethrough',
-    label: 'Strikethrough',
+    label: '删除线',
     type: 'action',
     icon: 'strikethrough',
     iconProps: (storeState) => ({
@@ -1109,7 +1148,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   highlight: {
     id: 'highlight',
-    label: 'Highlight',
+    label: '高亮',
     type: 'action',
     icon: 'highlight',
     iconProps: (storeState) => ({
@@ -1129,7 +1168,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   freehand: {
     id: 'freehand',
-    label: 'Freehand',
+    label: '自由绘制',
     type: 'action',
     icon: 'pencilMarker',
     iconProps: (storeState) => ({
@@ -1150,7 +1189,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   circle: {
     id: 'circle',
-    label: 'Circle',
+    label: '圆形',
     type: 'action',
     icon: 'circle',
     iconProps: (storeState) => ({
@@ -1171,7 +1210,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   square: {
     id: 'square',
-    label: 'Square',
+    label: '矩形',
     type: 'action',
     icon: 'square',
     iconProps: (storeState) => ({
@@ -1192,7 +1231,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   line: {
     id: 'line',
-    label: 'Line',
+    label: '直线',
     type: 'action',
     icon: 'line',
     iconProps: (storeState) => ({
@@ -1212,7 +1251,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   lineArrow: {
     id: 'lineArrow',
-    label: 'Line Arrow',
+    label: '箭头线',
     type: 'action',
     icon: 'lineArrow',
     iconProps: (storeState) => ({
@@ -1232,7 +1271,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   polyline: {
     id: 'polyline',
-    label: 'Polyline',
+    label: '折线',
     type: 'action',
     icon: 'zigzag',
     iconProps: (storeState) => ({
@@ -1252,7 +1291,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   polygon: {
     id: 'polygon',
-    label: 'Polygon',
+    label: '多边形',
     type: 'action',
     icon: 'polygon',
     iconProps: (storeState) => ({
@@ -1273,7 +1312,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   freeText: {
     id: 'freeText',
-    label: 'Free Text',
+    label: '自由文本',
     type: 'action',
     icon: 'text',
     iconProps: (storeState) => ({
@@ -1293,7 +1332,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   photo: {
     id: 'photo',
-    label: 'Photo',
+    label: '图片',
     type: 'action',
     icon: 'photo',
     action: (registry, state) => {
@@ -1310,7 +1349,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   squigglySelection: {
     id: 'squigglySelection',
-    label: 'Squiggly Selection',
+    label: '波浪线选中',
     type: 'action',
     icon: 'squiggly',
     iconProps: (storeState) => ({
@@ -1357,7 +1396,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   underlineSelection: {
     id: 'underlineSelection',
-    label: 'Underline Selection',
+    label: '下划线选中',
     type: 'action',
     icon: 'underline',
     iconProps: (storeState) => ({
@@ -1403,7 +1442,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   strikethroughSelection: {
     id: 'strikethroughSelection',
-    label: 'Strikethrough Selection',
+    label: '删除线选中',
     type: 'action',
     icon: 'strikethrough',
     iconProps: (storeState) => ({
@@ -1449,7 +1488,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   highlightSelection: {
     id: 'highlightSelection',
-    label: 'Highlight Selection',
+    label: '高亮选中',
     type: 'action',
     icon: 'highlight',
     iconProps: (storeState) => ({
@@ -1495,7 +1534,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   saveRedaction: {
     id: 'saveRedaction',
-    label: 'Save redaction',
+    label: '保存涂黑',
     type: 'action',
     icon: 'check',
     action: (registry) => {
@@ -1511,7 +1550,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   exitRedaction: {
     id: 'exitRedaction',
-    label: 'Exit redaction',
+    label: '退出涂黑',
     type: 'action',
     icon: 'x',
     action: (registry) => {
@@ -1527,7 +1566,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   redactSelection: {
     id: 'redactSelection',
-    label: 'Redact Selection',
+    label: '涂黑选区',
     type: 'action',
     icon: 'redact',
     action: (registry) => {
@@ -1541,7 +1580,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   redact: {
     id: 'redact',
-    label: 'Redact Selection',
+    label: '涂黑选区',
     type: 'action',
     icon: 'redact',
     action: (registry) => {
@@ -1559,7 +1598,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   redactArea: {
     id: 'redactArea',
-    label: 'Redact Area',
+    label: '框选涂黑',
     type: 'action',
     icon: 'redactArea',
     action: (registry) => {
@@ -1577,7 +1616,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   styleAnnotation: {
     id: 'styleAnnotation',
-    label: 'Style',
+    label: '样式',
     type: 'action',
     icon: 'palette',
     action: (registry, state) => {
@@ -1601,7 +1640,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   deleteAnnotation: {
     id: 'deleteAnnotation',
-    label: 'Delete',
+    label: '删除',
     type: 'action',
     icon: 'trash',
     action: (registry) => {
@@ -1619,7 +1658,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   panMode: {
     id: 'panMode',
-    label: 'Pan',
+    label: '抓手',
     type: 'action',
     dividerBefore: true,
     icon: 'hand',
@@ -1640,7 +1679,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   pointerMode: {
     id: 'pointerMode',
-    label: 'Pointer',
+    label: '指针',
     type: 'action',
     icon: 'pointer',
     action: (registry) => {
@@ -1660,7 +1699,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   undo: {
     id: 'undo',
-    label: 'Undo',
+    label: '撤销',
     type: 'action',
     icon: 'arrowBackUp',
     action: (registry) => {
@@ -1676,7 +1715,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   redo: {
     id: 'redo',
-    label: 'Redo',
+    label: '重做',
     type: 'action',
     icon: 'arrowForwardUp',
     action: (registry) => {
@@ -1692,7 +1731,7 @@ export const menuItems: Record<string, MenuItem<State>> = {
   },
   commitAnnotations: {
     id: 'commitAnnotations',
-    label: 'Commit',
+    label: '提交',
     type: 'action',
     icon: 'deviceFloppy',
     action: (registry) => {
@@ -1712,7 +1751,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'menuCtr',
       active: false,
-      label: 'Menu',
+      label: '菜单',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1725,7 +1764,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'deleteAnnotation',
       active: false,
-      label: 'Delete',
+      label: '删除',
     },
   },
   styleButton: {
@@ -1734,7 +1773,8 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'styleAnnotation',
       active: false,
-      label: 'Style',
+      label: '样式',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1747,7 +1787,8 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'undo',
       disabled: false,
-      label: 'Undo',
+      label: '撤销',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1760,7 +1801,8 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'redo',
       disabled: false,
-      label: 'Redo',
+      label: '重做',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1773,7 +1815,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'commitAnnotations',
       active: false,
-      label: 'Commit',
+      label: '提交',
     },
   },
   copyButton: {
@@ -1782,7 +1824,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'copy',
       active: false,
-      label: 'Copy',
+      label: '复制',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1795,7 +1837,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'panMode',
       active: false,
-      label: 'Pan',
+      label: '抓手',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1808,7 +1850,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'pointerMode',
       active: false,
-      label: 'Pointer',
+      label: '指针',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1821,7 +1863,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'circle',
       active: false,
-      label: 'Circle',
+      label: '圆形',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1835,7 +1877,8 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'freeText',
       active: false,
-      label: 'Free Text',
+      label: '文字',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1849,7 +1892,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'square',
       active: false,
-      label: 'Square',
+      label: '矩形',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1877,7 +1920,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'line',
       active: false,
-      label: 'Line',
+      label: '直线',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1891,7 +1934,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'lineArrow',
       active: false,
-      label: 'Line Arrow',
+      label: '箭头线',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1905,7 +1948,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'polyline',
       active: false,
-      label: 'Polyline',
+      label: '折线',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1919,8 +1962,9 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'underline',
       active: false,
-      label: 'Underline',
+      label: '下划线',
       color: '#e44234',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1934,8 +1978,9 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'squiggly',
       active: false,
-      label: 'Squiggly',
+      label: '波浪线',
       color: '#e44234',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1949,8 +1994,9 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'strikethrough',
       active: false,
-      label: 'Strikethrough',
+      label: '删除线',
       color: '#e44234',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1964,8 +2010,9 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'highlight',
       active: false,
-      label: 'Highlight',
+      label: '高亮',
       color: '#ffcd45',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1979,8 +2026,9 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'freehand',
       active: false,
-      label: 'Freehand',
+      label: '绘制',
       color: '#e44234',
+      showLabel: true,
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -1994,7 +2042,7 @@ export const components: Record<string, UIComponentType<State>> = {
     props: {
       commandId: 'photo',
       active: false,
-      label: 'Photo',
+      label: '图片',
       color: '#000000',
     },
     mapStateToProps: (storeState, ownProps) => ({
@@ -2159,7 +2207,7 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'iconButton',
     id: 'downloadButton',
     props: {
-      label: 'Download',
+      label: '下载',
       img: 'data:image/svg+xml;base64,PHN2ZyAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgd2lkdGg9IjI0IiAgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCIgIGZpbGw9Im5vbmUiICBzdHJva2U9IiMzNDNhNDAiICBzdHJva2Utd2lkdGg9IjIiICBzdHJva2UtbGluZWNhcD0icm91bmQiICBzdHJva2UtbGluZWpvaW49InJvdW5kIiAgY2xhc3M9Imljb24gaWNvbi10YWJsZXIgaWNvbnMtdGFibGVyLW91dGxpbmUgaWNvbi10YWJsZXItZG93bmxvYWQiPjxwYXRoIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00IDE3djJhMiAyIDAgMCAwIDIgMmgxMmEyIDIgMCAwIDAgMiAtMnYtMiIgLz48cGF0aCBkPSJNNyAxMWw1IDVsNSAtNSIgLz48cGF0aCBkPSJNMTIgNGwwIDEyIiAvPjwvc3ZnPg==',
     },
   },
@@ -2168,7 +2216,7 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'zoomButton',
     props: {
       commandId: 'zoom',
-      label: 'Zoom',
+      label: '缩放',
       img: 'data:image/svg+xml;base64,PHN2ZyAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgd2lkdGg9IjI0IiAgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCIgIGZpbGw9Im5vbmUiICBzdHJva2U9IiMzNDNhNDAiICBzdHJva2Utd2lkdGg9IjIiICBzdHJva2UtbGluZWNhcD0icm91bmQiICBzdHJva2UtbGluZWpvaW49InJvdW5kIiAgY2xhc3M9Imljb24gaWNvbi10YWJsZXIgaWNvbnMtdGFibGVyLW91dGxpbmUgaWNvbi10YWJsZXItY2lyY2xlLXBsdXMiPjxwYXRoIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0zIDEyYTkgOSAwIDEgMCAxOCAwYTkgOSAwIDAgMCAtMTggMCIgLz48cGF0aCBkPSJNOSAxMmg2IiAvPjxwYXRoIGQ9Ik0xMiA5djYiIC8+PC9zdmc+',
     },
     mapStateToProps: (storeState, ownProps) => ({
@@ -2182,7 +2230,7 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'sidebarButton',
     props: {
       commandId: 'sidebar',
-      label: 'Sidebar',
+      label: '侧边栏',
       active: false,
     },
     mapStateToProps: (storeState, ownProps) => ({
@@ -2199,7 +2247,7 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'expandLeftActionsButton',
     props: {
       commandId: 'leftAction',
-      label: 'Left Panel Actions',
+      label: '左侧面板操作',
     },
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
@@ -2210,21 +2258,21 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'headerStart',
     type: 'groupedItems',
     slots: [
-      { componentId: 'menuButton', priority: 0 },
-      { componentId: 'divider1', priority: 1, className: 'flex' },
+      // { componentId: 'menuButton', priority: 0 },
+      // { componentId: 'divider1', priority: 1, className: 'flex' },
       { componentId: 'sidebarButton', priority: 2 },
-      { componentId: 'expandLeftActionsButton', priority: 3, className: '@min-[400px]:hidden' },
-      { componentId: 'viewCtrButton', priority: 4, className: 'hidden @min-[400px]:block' },
+      // { componentId: 'expandLeftActionsButton', priority: 3, className: '@min-[400px]:hidden' },
+      // { componentId: 'viewCtrButton', priority: 4, className: 'hidden @min-[400px]:block' },
       { componentId: 'divider1', priority: 6, className: 'hidden @min-[400px]:flex' },
-      {
-        componentId: 'zoomButton',
-        priority: 7,
-        className: 'hidden @min-[400px]:block @min-[600px]:hidden',
-      },
-      { componentId: 'zoom', priority: 8, className: 'hidden @min-[600px]:block' },
-      { componentId: 'divider1', priority: 9, className: 'hidden @min-[600px]:flex' },
+      // {
+      //   componentId: 'zoomButton',
+      //   priority: 7,
+      //   className: 'hidden @min-[400px]:block @min-[600px]:hidden',
+      // },
+      // { componentId: 'zoom', priority: 8, className: 'hidden @min-[600px]:block' },
+      // { componentId: 'divider1', priority: 9, className: 'hidden @min-[600px]:flex' },
       { componentId: 'panModeButton', priority: 10, className: 'hidden @min-[600px]:block' },
-      { componentId: 'pointerModeButton', priority: 11, className: 'hidden @min-[600px]:block' },
+      // { componentId: 'pointerModeButton', priority: 11, className: 'hidden @min-[600px]:block' },
     ],
     props: {
       gap: 10,
@@ -2234,7 +2282,7 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'tabButton',
     id: 'viewTab',
     props: {
-      label: 'View',
+      label: '查看',
       commandId: 'view',
       active: false,
     },
@@ -2247,7 +2295,7 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'tabButton',
     id: 'annotateTab',
     props: {
-      label: 'Annotate',
+      label: '标注',
       commandId: 'annotate',
       active: false,
     },
@@ -2260,7 +2308,7 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'tabButton',
     id: 'shapesTab',
     props: {
-      label: 'Shapes',
+      label: '形状',
       commandId: 'shapes',
       active: false,
     },
@@ -2273,7 +2321,7 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'tabButton',
     id: 'redactionTab',
     props: {
-      label: 'Redact',
+      label: '涂黑',
       commandId: 'redaction',
       active: false,
     },
@@ -2306,6 +2354,35 @@ export const components: Record<string, UIComponentType<State>> = {
     mapStateToProps: (storeState, ownProps) => ({
       ...ownProps,
       active: isActive(menuItems.form, storeState),
+    }),
+  },
+  // @ts-ignore-next-line
+  hostBtn: {
+    type: 'textButton',
+    id: 'hostBtn',
+    initialState: { active: false },
+    props: {
+      label: '主持',
+      commandId: 'host',
+      active: false,
+    },
+    mapStateToProps: (storeState, ownProps) => ({
+      ...ownProps,
+      active: isActive(menuItems.host, storeState),
+    }),
+  },
+  followBtn: {
+    type: 'textButton',
+    id: 'followBtn',
+    initialState: { active: false },
+    props: {
+      label: '跟随',
+      commandId: 'follow',
+      active: false,
+    },
+    mapStateToProps: (storeState, ownProps) => ({
+      ...ownProps,
+      active: isActive(menuItems.follow, storeState),
     }),
   },
   tabOverflowButton: {
@@ -2368,16 +2445,18 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'headerCenter',
     type: 'groupedItems',
     slots: [
-      { componentId: 'selectButton', priority: 0, className: 'block @min-[500px]:hidden' },
-      { componentId: 'viewTab', priority: 1, className: 'hidden @min-[500px]:block' },
-      { componentId: 'annotateTab', priority: 2, className: 'hidden @min-[800px]:block' },
-      { componentId: 'shapesTab', priority: 3, className: 'hidden @min-[800px]:block' },
-      { componentId: 'redactionTab', priority: 4, className: 'hidden @min-[800px]:block' },
-      {
-        componentId: 'tabOverflowButton',
-        priority: 5,
-        className: 'hidden @min-[500px]:block @min-[800px]:hidden',
-      },
+      // { componentId: 'selectButton', priority: 0, className: 'block @min-[500px]:hidden' },
+      // { componentId: 'viewTab', priority: 1, className: 'hidden @min-[500px]:block' },
+      // { componentId: 'annotateTab', priority: 2, className: 'hidden @min-[800px]:block' },
+      // { componentId: 'shapesTab', priority: 3, className: 'hidden @min-[800px]:block' },
+      // { componentId: 'redactionTab', priority: 4, className: 'hidden @min-[800px]:block' },
+      // {
+      //   componentId: 'tabOverflowButton',
+      //   priority: 5,
+      //   className: 'hidden @min-[500px]:block @min-[800px]:hidden',
+      // },
+      { componentId: 'hostBtn', priority: 0, className: 'block' },
+      { componentId: 'followBtn', priority: 1, className: 'block' },
     ],
     props: {
       gap: 10,
@@ -2505,22 +2584,22 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'shapeTools',
     type: 'groupedItems',
     slots: [
-      { componentId: 'circleButton', priority: 6 },
-      { componentId: 'squareButton', priority: 7 },
-      { componentId: 'polygonButton', priority: 8 },
-      { componentId: 'polylineButton', priority: 9 },
-      { componentId: 'lineButton', priority: 10, className: 'hidden @min-[500px]:block' },
-      { componentId: 'lineArrowButton', priority: 11, className: 'hidden @min-[500px]:block' },
+      { componentId: 'undoButton', priority: 6 },
+      { componentId: 'redoButton', priority: 7 },
+      { componentId: 'divider1', priority: 8 },
+      { componentId: 'circleButton', priority: 9 },
+      { componentId: 'squareButton', priority: 10 },
+      { componentId: 'polygonButton', priority: 11 },
+      { componentId: 'polylineButton', priority: 12 },
+      { componentId: 'lineButton', priority: 13, className: 'hidden @min-[500px]:block' },
+      { componentId: 'lineArrowButton', priority: 14, className: 'hidden @min-[500px]:block' },
       {
         componentId: 'shapeToolOverflowButton',
-        priority: 12,
+        priority: 15,
         className: 'block @min-[500px]:hidden',
       },
-      { componentId: 'divider1', priority: 12 },
-      { componentId: 'styleButton', priority: 13 },
-      { componentId: 'divider1', priority: 14 },
-      { componentId: 'undoButton', priority: 15 },
-      { componentId: 'redoButton', priority: 16 },
+      { componentId: 'divider1', priority: 15 },
+      { componentId: 'styleButton', priority: 16 },
     ],
     props: {
       gap: 10,
@@ -2544,23 +2623,23 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'annotationTools',
     type: 'groupedItems',
     slots: [
-      { componentId: 'highlightButton', priority: 1 },
-      { componentId: 'underlineButton', priority: 2 },
-      { componentId: 'strikethroughButton', priority: 3 },
-      { componentId: 'squigglyButton', priority: 4 },
-      { componentId: 'freehandButton', priority: 5, className: 'hidden @min-[500px]:block' },
-      { componentId: 'freeTextButton', priority: 6, className: 'hidden @min-[500px]:block' },
-      { componentId: 'photoButton', priority: 7, className: 'hidden @min-[500px]:block' },
+      { componentId: 'undoButton', priority: 1 },
+      { componentId: 'redoButton', priority: 2 },
+      { componentId: 'divider1', priority: 3 },
+      { componentId: 'highlightButton', priority: 4 },
+      { componentId: 'underlineButton', priority: 5 },
+      { componentId: 'strikethroughButton', priority: 6 },
+      { componentId: 'squigglyButton', priority: 7 },
+      { componentId: 'freehandButton', priority: 8, className: 'hidden @min-[500px]:block' },
+      { componentId: 'freeTextButton', priority: 9, className: 'hidden @min-[500px]:block' },
+      // { componentId: 'photoButton', priority: 7, className: 'hidden @min-[500px]:block' },
       {
         componentId: 'annotationToolOverflowButton',
-        priority: 8,
+        priority: 10,
         className: 'block @min-[500px]:hidden',
       },
-      { componentId: 'divider1', priority: 9 },
-      { componentId: 'styleButton', priority: 10 },
       { componentId: 'divider1', priority: 11 },
-      { componentId: 'undoButton', priority: 12 },
-      { componentId: 'redoButton', priority: 13 },
+      { componentId: 'styleButton', priority: 12 },
     ],
     props: {
       gap: 10,
@@ -2570,8 +2649,8 @@ export const components: Record<string, UIComponentType<State>> = {
     type: 'header',
     id: 'toolsHeader',
     initialState: {
-      visible: false,
-      visibleChild: null,
+      visible: true,
+      visibleChild: 'annotationTools',
     },
     props: (initialState) => ({
       placement: 'top',
@@ -2807,7 +2886,7 @@ export function PDFViewer({ config }: PDFViewerProps) {
       <>
         <style>{styles}</style>
         <div className="flex h-full w-full items-center justify-center">
-          <LoadingIndicator size="lg" text="Initializing PDF engine..." />
+          <LoadingIndicator size="lg" text="初始化 PDF 引擎..." />
         </div>
       </>
     );
@@ -2825,6 +2904,7 @@ export function PDFViewer({ config }: PDFViewerProps) {
             uiCapability.registerComponentRenderer('groupedItems', groupedItemsRenderer);
             uiCapability.registerComponentRenderer('iconButton', iconButtonRenderer);
             uiCapability.registerComponentRenderer('tabButton', tabButtonRenderer);
+            uiCapability.registerComponentRenderer('textButton', textButtonRenderer);
             uiCapability.registerComponentRenderer('header', headerRenderer);
             uiCapability.registerComponentRenderer('divider', dividerRenderer);
             uiCapability.registerComponentRenderer('panel', panelRenderer);
@@ -2878,7 +2958,9 @@ export function PDFViewer({ config }: PDFViewerProps) {
           createPluginRegistration(BookmarkPluginPackage),
           createPluginRegistration(ExportPluginPackage),
           createPluginRegistration(InteractionManagerPluginPackage),
-          createPluginRegistration(PanPluginPackage),
+          createPluginRegistration(PanPluginPackage, {
+            defaultMode: 'always',
+          }),
           createPluginRegistration(CapturePluginPackage, {
             scale: 2,
             imageType: 'image/png',
@@ -2913,7 +2995,7 @@ export function PDFViewer({ config }: PDFViewerProps) {
                           >
                             {!pluginsReady && (
                               <div className="flex h-full w-full items-center justify-center">
-                                <LoadingIndicator size="lg" text="Loading PDF document..." />
+                                <LoadingIndicator size="lg" text="加载 PDF 文档..." />
                               </div>
                             )}
                             {pluginsReady && (

@@ -16,7 +16,7 @@ interface CommentProps {
 export const Comment = ({ annotation, onSave, onDelete, isReply = false }: CommentProps) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const author = annotation.author || 'Guest';
+  const author = annotation.author || '访客';
 
   const handleSave = (newText: string) => {
     onSave(newText);
