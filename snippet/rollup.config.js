@@ -20,7 +20,10 @@ const isDev = process.env.ROLLUP_WATCH;
 
 export default [
   {
-    input: 'src/embedpdf.ts',
+    input: {
+      'embedpdf': 'src/embedpdf.ts',
+      'performance-config': 'src/performance-config.ts',
+    },
     output: {
       dir: 'dist',
       format: 'esm',

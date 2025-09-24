@@ -8,8 +8,8 @@ export interface CacheConfig {
 }
 
 const DEFAULT_CONFIG: Required<CacheConfig> = {
-  pageTtl: 5000, // 5 seconds
-  maxPagesPerDocument: 10,
+  pageTtl: 30000, // 30 seconds - 增加缓存时间
+  maxPagesPerDocument: 20, // 增加缓存页面数量
 };
 
 export class PdfCache {
@@ -88,6 +88,8 @@ export class PdfCache {
 
 export class DocumentContext {
   private readonly pageCache: PageCache;
+  private preloadQueue: Set<number> = new Set();
+  private preloadTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(
     public readonly filePtr: number,
@@ -116,6 +118,58 @@ export class DocumentContext {
   /** Get number of pages currently in cache */
   getCacheSize(): number {
     return this.pageCache.size();
+  }
+
+  /** 预加载相邻页面 */
+  preloadAdjacentPages(currentPageIdx: number, totalPages: number, range: number = 2): void {
+    // 清除之前的预加载任务
+    if (this.preloadTimeout) {
+      clearTimeout(this.preloadTimeout);
+    }
+
+    // 延迟执行预加载，避免阻塞当前页面渲染
+    this.preloadTimeout = setTimeout(() => {
+      const pagesToPreload: number[] = [];
+      
+      // 预加载前后几页
+      for (let i = Math.max(0, currentPageIdx - range); 
+           i <= Math.min(totalPages - 1, currentPageIdx + range); 
+           i++) {
+        if (i !== currentPageIdx && !this.pageCache.hasPage(i)) {
+          pagesToPreload.push(i);
+        }
+      }
+
+      // 异步预加载页面
+      pagesToPreload.forEach(pageIdx => {
+        if (!this.preloadQueue.has(pageIdx)) {
+          this.preloadQueue.add(pageIdx);
+          // 使用 requestIdleCallback 在浏览器空闲时预加载
+          if (typeof requestIdleCallback !== 'undefined') {
+            requestIdleCallback(() => {
+              try {
+                this.pageCache.acquire(pageIdx);
+                this.preloadQueue.delete(pageIdx);
+              } catch (error) {
+                console.warn(`Failed to preload page ${pageIdx}:`, error);
+                this.preloadQueue.delete(pageIdx);
+              }
+            });
+          } else {
+            // 降级到 setTimeout
+            setTimeout(() => {
+              try {
+                this.pageCache.acquire(pageIdx);
+                this.preloadQueue.delete(pageIdx);
+              } catch (error) {
+                console.warn(`Failed to preload page ${pageIdx}:`, error);
+                this.preloadQueue.delete(pageIdx);
+              }
+            }, 100);
+          }
+        }
+      });
+    }, 100); // 100ms 延迟
   }
 
   /** Tear down all pages + this document */
@@ -205,6 +259,11 @@ export class PageCache {
   /** Get current cache size */
   size(): number {
     return this.cache.size;
+  }
+
+  /** Check if a page is currently cached */
+  hasPage(pageIdx: number): boolean {
+    return this.cache.has(pageIdx);
   }
 
   /** Evict least recently used pages if cache exceeds max size */

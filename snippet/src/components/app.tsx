@@ -134,6 +134,7 @@ import {
   getToolDefaultsById,
 } from '@embedpdf/plugin-annotation/preact';
 import { LoadingIndicator } from './ui/loading-indicator';
+import { ProgressiveLoader, SimpleLoader } from './progressive-loader';
 import { PrintPluginConfig, PrintPluginPackage } from '@embedpdf/plugin-print/preact';
 import {
   FULLSCREEN_PLUGIN_ID,
@@ -202,6 +203,13 @@ export interface PDFViewerConfig {
   wasmUrl?: string;
   plugins?: PluginConfigs;
   log?: boolean;
+  onButtonClick?: (buttonId: string, active: boolean) => void;
+  performance?: {
+    enableProgressiveRendering?: boolean;
+    preloadRange?: number;
+    cacheSize?: number;
+    cacheTtl?: number;
+  };
 }
 
 // **Default Plugin Configurations**
@@ -2942,6 +2950,7 @@ export function PDFViewer({ config }: PDFViewerProps) {
     ...(config.wasmUrl && { wasmUrl: config.wasmUrl }),
     worker: config.worker,
     logger: config.log ? logger : undefined,
+    enableProgressiveRendering: config.performance?.enableProgressiveRendering ?? true,
   });
 
   // **Merge user configurations with defaults**
@@ -2951,9 +2960,11 @@ export function PDFViewer({ config }: PDFViewerProps) {
     return (
       <>
         <style>{styles}</style>
-        <div className="flex h-full w-full items-center justify-center">
-          <LoadingIndicator size="lg" text="初始化 PDF 引擎..." />
-        </div>
+        <ProgressiveLoader 
+          isLoading={true}
+          message="初始化 PDF 引擎..."
+          showProgress={false}
+        />
       </>
     );
 

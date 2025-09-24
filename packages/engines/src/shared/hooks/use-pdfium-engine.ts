@@ -7,6 +7,7 @@ interface UsePdfiumEngineProps {
   wasmUrl?: string;
   worker?: boolean;
   logger?: Logger;
+  enableProgressiveRendering?: boolean;
 }
 
 export function usePdfiumEngine(config?: UsePdfiumEngineProps) {

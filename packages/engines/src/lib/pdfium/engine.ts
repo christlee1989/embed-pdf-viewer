@@ -191,6 +191,7 @@ export enum PdfiumErrorCode {
 interface PdfiumEngineOptions<T> {
   logger?: Logger;
   imageDataConverter?: ImageDataConverter<T>;
+  enableProgressiveRendering?: boolean;
 }
 
 export class OffscreenCanvasError extends Error {
@@ -230,7 +231,8 @@ export class PdfiumEngine<T = Blob> implements PdfEngine<T> {
   /**
    * pdf documents that opened
    */
-  private readonly cache: PdfCache;
+  private readonly cache: PdfCache
+  private readonly enableProgressiveRendering: boolean;
 
   /**
    * memory manager instance
@@ -265,12 +267,14 @@ export class PdfiumEngine<T = Blob> implements PdfEngine<T> {
     const {
       logger = new NoopLogger(),
       imageDataConverter = browserImageDataToBlobConverter as ImageDataConverter<T>,
+      enableProgressiveRendering = true,
     } = options;
 
     this.cache = new PdfCache(this.pdfiumModule);
     this.logger = logger;
     this.imageDataConverter = imageDataConverter;
     this.memoryManager = new MemoryManager(this.pdfiumModule, this.logger);
+    this.enableProgressiveRendering = enableProgressiveRendering;
 
     if (this.logger.isEnabled('debug')) {
       this.memoryLeakCheckInterval = setInterval(() => {
@@ -968,6 +972,15 @@ export class PdfiumEngine<T = Blob> implements PdfEngine<T> {
 
     const rect = { origin: { x: 0, y: 0 }, size: page.size };
     const task = this.renderRectEncoded(doc, page, rect, options);
+    
+    // 触发预加载相邻页面（如果启用渐进式渲染）
+    if (this.enableProgressiveRendering) {
+      const docContext = this.cache.getContext(doc.id);
+      if (docContext) {
+        docContext.preloadAdjacentPages(page.index, doc.pageCount, 2);
+      }
+    }
+    
     this.logger.perf(LOG_SOURCE, LOG_CATEGORY, `RenderPage`, 'End', `${doc.id}-${page.index}`);
 
     return task;
