@@ -778,6 +778,44 @@ export const menuItems: Record<string, MenuItem<State>> = {
       }
     },
   },
+  goBack: {
+    id: 'goBack',
+    label: '返回',
+    icon: 'arrowBackUp',
+    type: 'action',
+    action: (registry, state) => {
+      const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
+      if (!ui) return;
+      // 获取当前状态并反转
+      const currentActive = ui.getComponent('goBackButton')?.props?.active || false;
+      ui.updateComponentState({
+        componentType: 'textButton',
+        componentId: 'goBackButton',
+        patch: { active: !currentActive }
+      });
+    },
+    active: (storeState) =>
+      storeState.plugins.ui.textButton.goBackButton.active === true,
+  },
+  files: {
+    id: 'files',
+    label: '文件列表',
+    icon: 'menu',
+    type: 'action',
+    action: (registry, state) => {
+      const ui = registry.getPlugin<UIPlugin>(UI_PLUGIN_ID)?.provides();
+      if (!ui) return;
+      // 获取当前状态并反转
+      const currentActive = ui.getComponent('filesButton')?.props?.active || false;
+      ui.updateComponentState({
+        componentType: 'textButton',
+        componentId: 'filesButton',
+        patch: { active: !currentActive }
+      });
+    },
+    active: (storeState) =>
+      storeState.plugins.ui.textButton.filesButton.active === true,
+  },
   sidebar: {
     id: 'sidebar',
     label: '侧边栏',
@@ -2225,6 +2263,32 @@ export const components: Record<string, UIComponentType<State>> = {
         isActive(menuItems.zoom, storeState) || isActive(menuItems.changeZoomLevel, storeState),
     }),
   },
+  goBackButton: {
+    type: 'iconButton',
+    id: 'goBackButton',
+    props: {
+      commandId: 'goBack',
+      label: '返回',
+      active: false,
+    },
+    mapStateToProps: (storeState, ownProps) => ({
+      ...ownProps,
+      active: isActive(menuItems.goBack, storeState),
+    }),
+  },
+  filesButton: {
+    type: 'iconButton',
+    id: 'filesButton',
+    props: {
+      commandId: 'files',
+      label: '文件列表',
+      active: false,
+    },
+    mapStateToProps: (storeState, ownProps) => ({
+      ...ownProps,
+      active: isActive(menuItems.files, storeState),
+    }),
+  },
   sidebarButton: {
     type: 'iconButton',
     id: 'sidebarButton',
@@ -2258,12 +2322,13 @@ export const components: Record<string, UIComponentType<State>> = {
     id: 'headerStart',
     type: 'groupedItems',
     slots: [
-      // { componentId: 'menuButton', priority: 0 },
-      // { componentId: 'divider1', priority: 1, className: 'flex' },
-      { componentId: 'sidebarButton', priority: 2 },
+      { componentId: 'goBackButton', priority: 0 },
+      { componentId: 'filesButton', priority: 1 },
+      { componentId: 'divider1', priority: 2, className: 'flex' },
+      { componentId: 'sidebarButton', priority: 3 },
       // { componentId: 'expandLeftActionsButton', priority: 3, className: '@min-[400px]:hidden' },
       // { componentId: 'viewCtrButton', priority: 4, className: 'hidden @min-[400px]:block' },
-      { componentId: 'divider1', priority: 6, className: 'hidden @min-[400px]:flex' },
+      { componentId: 'divider1', priority: 7, className: 'hidden @min-[400px]:flex' },
       // {
       //   componentId: 'zoomButton',
       //   priority: 7,
@@ -2371,6 +2436,7 @@ export const components: Record<string, UIComponentType<State>> = {
       active: isActive(menuItems.host, storeState),
     }),
   },
+  // @ts-ignore-next-line
   followBtn: {
     type: 'textButton',
     id: 'followBtn',
