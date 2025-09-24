@@ -24,6 +24,12 @@ export const initialState: UIPluginState = {
     followBtn: {
       active: false,
     },
+    goBackButton: {
+      active: false,
+    },
+    filesButton: {
+      active: false,
+    },
   },
   selectButton: {},
   custom: {},
