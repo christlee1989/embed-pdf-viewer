@@ -56,9 +56,12 @@ export function RenderLayer({
       const task = renderProvides.renderPage({
         pageIndex,
         options: { 
-          scaleFactor: actualScale, 
-          dpr: dpr || window.devicePixelRatio,
-          preloadRange: preloadRange
+          // scaleFactor: actualScale, 
+          // dpr: dpr || window.devicePixelRatio,
+          preloadRange: preloadRange,
+          imageQuality: 0.1,
+          dpr: 1,
+          scaleFactor: 0.1,
         },
       });
       task.wait((blob) => {
