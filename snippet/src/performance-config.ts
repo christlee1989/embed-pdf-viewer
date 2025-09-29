@@ -7,8 +7,8 @@ import { PDFViewerConfig } from './components/app';
 export const HIGH_PERFORMANCE_CONFIG: Partial<PDFViewerConfig> = {
   performance: {
     enableProgressiveRendering: true,
-    preloadRange: 3, // 预加载前后3页
-    cacheSize: 30, // 缓存30页
+    preloadRange: 100, // 预加载前后3页
+    cacheSize: 100, // 缓存30页
     cacheTtl: 60000, // 缓存60秒
   },
   log: false, // 关闭日志以提高性能
@@ -51,21 +51,21 @@ export function getOptimalConfig(deviceInfo?: {
   connection?: 'slow' | 'fast' | 'unknown';
 }): Partial<PDFViewerConfig> {
   // 检测设备性能
-  const isLowEndDevice = 
-    (deviceInfo?.memory && deviceInfo.memory < 4) ||
-    (deviceInfo?.cores && deviceInfo.cores < 4) ||
-    deviceInfo?.connection === 'slow';
+  // const isLowEndDevice = 
+  //   (deviceInfo?.memory && deviceInfo.memory < 4) ||
+  //   (deviceInfo?.cores && deviceInfo.cores < 4) ||
+  //   deviceInfo?.connection === 'slow';
 
-  if (isLowEndDevice) {
-    return MEMORY_OPTIMIZED_CONFIG;
-  }
+  // if (isLowEndDevice) {
+  //   return MEMORY_OPTIMIZED_CONFIG;
+  // }
 
   // 检测是否为移动设备
-  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
-  if (isMobile) {
-    return FAST_LOADING_CONFIG;
-  }
+  // if (isMobile) {
+  //   return FAST_LOADING_CONFIG;
+  // }
 
   // 默认使用高性能配置
   return HIGH_PERFORMANCE_CONFIG;

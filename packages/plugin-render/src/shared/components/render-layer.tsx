@@ -17,6 +17,10 @@ type RenderLayerProps = Omit<HTMLAttributes<HTMLImageElement>, 'style'> & {
   scaleFactor?: number;
   dpr?: number;
   style?: CSSProperties;
+  /**
+   * Number of adjacent pages to preload
+   */
+  preloadRange?: number;
 };
 
 export function RenderLayer({
@@ -25,6 +29,7 @@ export function RenderLayer({
   scaleFactor,
   dpr,
   style,
+  preloadRange,
   ...props
 }: RenderLayerProps) {
   const { provides: renderProvides } = useRenderCapability();
@@ -50,7 +55,11 @@ export function RenderLayer({
     if (renderProvides) {
       const task = renderProvides.renderPage({
         pageIndex,
-        options: { scaleFactor: actualScale, dpr: dpr || window.devicePixelRatio },
+        options: { 
+          scaleFactor: actualScale, 
+          dpr: dpr || window.devicePixelRatio,
+          preloadRange: preloadRange
+        },
       });
       task.wait((blob) => {
         const url = URL.createObjectURL(blob);

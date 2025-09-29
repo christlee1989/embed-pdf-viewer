@@ -977,7 +977,10 @@ export class PdfiumEngine<T = Blob> implements PdfEngine<T> {
     if (this.enableProgressiveRendering) {
       const docContext = this.cache.getContext(doc.id);
       if (docContext) {
-        docContext.preloadAdjacentPages(page.index, doc.pageCount, 2);
+        // 使用配置的预加载范围，默认为2
+        const preloadRange = options?.preloadRange ?? 2;
+        console.log('### preloadRange ###', preloadRange);
+        docContext.preloadAdjacentPages(page.index, doc.pageCount, preloadRange);
       }
     }
     

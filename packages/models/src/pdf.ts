@@ -2465,6 +2465,11 @@ export interface PdfRenderOptions {
    * Image quality (0-1) for jpeg and png
    */
   imageQuality?: number;
+
+  /**
+   * Number of adjacent pages to preload (default: 2)
+   */
+  preloadRange?: number;
 }
 
 export interface ConvertToBlobOptions {
@@ -2483,6 +2488,10 @@ export interface PdfRenderPageOptions extends PdfRenderOptions {
    * Whether to render annotations
    */
   withAnnotations?: boolean;
+  /**
+   * Number of adjacent pages to preload (default: 2)
+   */
+  preloadRange?: number;
 }
 
 export interface PdfRenderPageAnnotationOptions extends PdfRenderOptions {

@@ -3100,6 +3100,7 @@ export function PDFViewer({ config }: PDFViewerProps) {
                                       >
                                         <RenderLayer
                                           pageIndex={pageIndex}
+                                          preloadRange={config.performance?.preloadRange}
                                           className="pointer-events-none"
                                         />
                                         <TilingLayer

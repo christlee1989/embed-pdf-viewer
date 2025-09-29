@@ -15,6 +15,10 @@ interface Props {
    */
   scaleFactor?: number;
   dpr?: number;
+  /**
+   * Number of adjacent pages to preload
+   */
+  preloadRange?: number;
 }
 
 const props = defineProps<Props>();
@@ -65,6 +69,7 @@ function startRender() {
     options: {
       scaleFactor: actualScale.value,
       dpr: props.dpr || window.devicePixelRatio,
+      preloadRange: props.preloadRange,
     },
   });
 
